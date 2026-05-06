@@ -61,8 +61,18 @@ li:hover {
     color: greenyellow;
 }
 
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 85px;
+    gap: 40px
+}
+
 button {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 80%;
+    width: 100px;
 }
