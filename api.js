@@ -1,4 +1,3 @@
-import axios from 'https://cdn.skypack.dev/axios';
 // URL endpoint
 const url_api = "https://rickandmortyapi.com/api/character";
 /**
@@ -6,57 +5,51 @@ requestData
 Send request to Endpoint
 @param {string} url_api**/
 async function requestData(url_api) {
-    const response = await axios.get(url_api);
-
-    getElementButton(document, 'set', response.info)
-    renderHtml(response);
+ const response = await axios.get(url_api);
+ let data = response.data;
+ getElementButton(document, 'set', data.info)
+ renderHtml(data);
 }
 /**
 loadMore
 Call @Function getElementButton */
 function loadMore() {
-    getElementButton(document, 'get')
+ getElementButton(document, 'get')
 }
 /**
 getElementButton
 @param {object} elementButton
 @param {object} button
 @param {string} operation*/
-function getElementButton(elementButton, operation = 'get', info = null) {
-    const button = elementButton.getElementById("loadMore");
-    if(operation == 'get'){
-        const next = button.getAttribute("data-next");
-        if(next == "" || next == null){
-            console.log("No hay url")
-        }else {
-            requestData(next);
-        }
+function getElementButton(elementButton, operation = 'get', info = null)
+{
+ const button = elementButton.getElementById("loadMore");
+ if(operation == 'get'){
+ const next = button.getAttribute("data-next");
+    if(next == "" || next == null){
+        console.log("No hay url")
     }else {
-        button.setAttribute("data-next", (info.next == null) ? '' : info.next)
-        button.setAttribute("data-prev", (info.prev == null) ? '' : info.prev)
+        requestData(next);
     }
-
+ }else {
+    button.setAttribute("data-next", (info.next == null) ? '' : info.next)
+    button.setAttribute("data-prev", (info.prev == null) ? '' : info.prev)
+ }
 }
 /**
 renderHtml
 @param {object} element
-@param {object} response*/
-function renderHtml(response){
-    let element = document.getElementById("character");
-    let resultCount = response.results.length;
-
-    for (let index = 0; index < resultCount; index++) {
-        let character = response.results[index];
-        element.innerHTML += `<li>
-            <img src="${character.image}" alt="${character.name}">
-            <h2>${character.name}</h2>
-            <span>${character.gender}</span>
-        </li>`; 
-
-    }
-
+@param {object} data*/
+function renderHtml(data){
+ let element = document.getElementById("character");
+ let resultCount = data.results.length;
+ for (let index = 0; index < resultCount; index++) {
+ let character = data.results[index];
+ element.innerHTML += `<li>
+ <img src="${character.image}" alt="${character.name}">
+ <h2>${character.name}</h2>
+ <span>${character.gender}</span>
+ </li>`;
+ }
 }
-
 const response = requestData(url_api);
-
-
