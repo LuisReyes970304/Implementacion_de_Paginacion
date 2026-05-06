@@ -1,3 +1,4 @@
+import axios from 'https://cdn.skypack.dev/axios';
 // URL endpoint
 const url_api = "https://rickandmortyapi.com/api/character";
 /**
@@ -5,10 +6,10 @@ requestData
 Send request to Endpoint
 @param {string} url_api**/
 async function requestData(url_api) {
-    const response = await fetch(url_api);
-    let data = await response.json();
-    getElementButton(document, 'set', data.info)
-    renderHtml(data);
+    const response = await axios.get(url_api);
+
+    getElementButton(document, 'set', response.info)
+    renderHtml(response);
 }
 /**
 loadMore
@@ -39,13 +40,13 @@ function getElementButton(elementButton, operation = 'get', info = null) {
 /**
 renderHtml
 @param {object} element
-@param {object} data*/
-function renderHtml(data){
+@param {object} response*/
+function renderHtml(response){
     let element = document.getElementById("character");
-    let resultCount = data.results.length;
+    let resultCount = response.results.length;
 
     for (let index = 0; index < resultCount; index++) {
-        let character = data.results[index];
+        let character = response.results[index];
         element.innerHTML += `<li>
             <img src="${character.image}" alt="${character.name}">
             <h2>${character.name}</h2>
