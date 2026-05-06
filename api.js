@@ -9,7 +9,8 @@ async function requestData(url_api) {
     const response = await axios.get(url_api);
     let data = response.data;
     console.log(data)
-    getElementButton(document, 'set', data.info);
+    getElementButton(document, "set", data.info);
+    getElementButtonPrev(document, "set", data.info);
     renderHtml(data);
 }
 
@@ -38,6 +39,20 @@ function getElementButton(elementButton, operation = 'get', info = null)
         }
     }else {
         button.setAttribute("data-next", (info.next == null) ? '' : info.next)
+    }
+}
+
+function getElementButtonPrev(elementButton, operation = 'get', info = null)
+{
+    const button = elementButton.getElementById("loadPrev");
+    if(operation == 'get'){
+    const prev = button.getAttribute("data-prev");
+        if(prev == "" || prev == null){
+            console.log("No hay url")
+        }else {
+            requestData(prev);
+        }
+    }else {
         button.setAttribute("data-prev", (info.prev == null) ? '' : info.prev)
     }
 }
