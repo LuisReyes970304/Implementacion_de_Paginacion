@@ -21,6 +21,10 @@ function loadMore() {
     getElementButton(document, 'get');
 }
 
+function loadPrev() {
+    getElementButtonPrev(document, 'get');
+}
+
 /**
 *getElementButton
 *@param {object} elementButton
