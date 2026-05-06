@@ -5,6 +5,8 @@ const url_api = "https://rickandmortyapi.com/api/character";
 *Send request to Endpoint
 *@param {string} url_api
 */
+
+
 async function requestData(url_api) {
     const response = await axios.get(url_api);
     let data = response.data;
@@ -57,7 +59,12 @@ function getElementButtonPrev(elementButton, operation = 'get', info = null)
             requestData(prev);
         }
     }else {
-        button.setAttribute("data-prev", (info.prev == null) ? '' : info.prev)
+        if (info.prev == null) {
+            button.style.display = "none"; 
+        } else {
+            button.style.display = "flex"; 
+            button.setAttribute("data-prev", info.prev);
+        }
     }
 }
 /**
