@@ -67,6 +67,25 @@ function getElementButtonPrev(elementButton, operation = 'get', info = null)
         }
     }
 }
+
+// function getPag(elementPag, operation = 'get', info = null)
+// {
+//     const pagNumber = elementPag.getElementById("pagNumber");
+//     if(operation == 'get'){
+//     const prev = pagNumber.getAttribute("data-prev");
+//     const next = pagNumber.getAttribute("data-next");
+//         if(prev == "" || prev == null){
+//             pagNumber.textContent = "1";
+//         }else{
+            
+//         }
+//     } else {
+//         pagNumber.setAttribute("data-next", (info.next == null) ? '' :
+//         info.next)
+//         pagNumber.setAttribute("data-prev", (info.prev == null) ? '' :
+//         info.prev)    
+//     }
+// }
 /**
 *renderHtml
 *@param {object} element
