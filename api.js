@@ -49,9 +49,12 @@ function getElementButton(elementButton, operation = 'get', info = null)
 function renderHtml(data){
     let element = document.getElementById("character");
     let resultCount = data.results.length;
+
+    element.innerHTML = "";
+    
     for (let index = 0; index < resultCount; index++) {
     let character = data.results[index];
-    element.innerHTML = `<li>
+    element.innerHTML += `<li>
         <img src="${character.image}" alt="${character.name}">
         <h2>${character.name}</h2>
         <span>${character.gender}</span>
