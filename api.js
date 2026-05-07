@@ -157,7 +157,8 @@ function renderHtml(data){
     let resultCount = data.results.length;
 
     element.innerHTML = "";
-    
+    element.scrollTop = element.scrollHeight;
+
     for (let index = 0; index < resultCount; index++) {
     let character = data.results[index];
     element.innerHTML += `<li>
