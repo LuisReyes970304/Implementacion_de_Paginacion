@@ -151,3 +151,21 @@ button:active {
 .show {
     display: flex;
 }
+
+@keyframes load {
+    from{
+        transform: rotate(0deg);
+    }
+
+    to{
+        transform: rotate(180deg);
+    }
+    
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.load{
+    animation: load 0.5s linear infinite;
+}
