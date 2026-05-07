@@ -6,12 +6,14 @@ const url_api = "https://rickandmortyapi.com/api/character";
 *@param {string} url_api
 */
 
-document.addEventListener("DOMContentLoaded", requestData(url_api));
+document.addEventListener("DOMContentLoaded", () => {
+    requestData(url_api);
+});
 
 async function requestData(url_api) {
     const response = await axios.get(url_api);
     let data = response.data;
-    console.log(data)
+    console.log(data);
 
     getElementButton(document, "set", data.info);
     getElementButtonPrev(document, "set", data.info);
@@ -26,11 +28,11 @@ async function requestData(url_api) {
 *Call @Function getElementButton 
 */
 function loadMore() {
-    getElementButton(document, 'get');
+    getElementButton(document, "get");
 }
 
 function loadPrev() {
-    getElementButtonPrev(document, 'get');
+    getElementButtonPrev(document, "get");
 }
 
 /**
@@ -39,10 +41,10 @@ function loadPrev() {
 *@param {object} button
 *@param {string} operation
 */
-function getElementButton(elementButton, operation = 'get', info = null)
+function getElementButton(elementButton, operation = "get", info = null)
 {
     const button = elementButton.getElementById("loadMore");
-    if(operation == 'get'){
+    if(operation == "get"){
     const next = button.getAttribute("data-next");
         if(next == "" || next == null){
             console.log("No hay url")
@@ -50,17 +52,23 @@ function getElementButton(elementButton, operation = 'get', info = null)
             requestData(next);
         }
     }else {
-        button.setAttribute("data-next", (info.next == null) ? '' : info.next)
+        button.setAttribute("data-next", (info.next == null) ? "" : info.next)
     }
 }
 
-function getElementButtonPrev(elementButton, operation = 'get', info = null)
+/**
+ * getElementButtonPrev
+ * @param {object} elementButton 
+ * @param {string} operation 
+ * @param {object} info 
+ */
+function getElementButtonPrev(elementButton, operation = "get", info = null)
 {
     const button = elementButton.getElementById("loadPrev");
-    if(operation == 'get'){
+    if(operation == "get"){
     const prev = button.getAttribute("data-prev");
         if(prev == "" || prev == null){
-            console.log("No hay url")
+            console.log("There is not URL")
         }else {
             requestData(prev);
         }
@@ -74,29 +82,39 @@ function getElementButtonPrev(elementButton, operation = 'get', info = null)
     }
 }
 
+/**
+ * getPageNumber
+ * @param {string} url 
+ * @returns {number} params
+ */
 function getPageNumber(url) {
-    if (!url) return null;
-    const params = new URL(url).searchParams;
-    return parseInt(params.get("page"));
+    if (!url) {
+        return null
+    } else {const params = new URL(url).searchParams;
+        return parseInt(params.get("page"));
+    };
 }
 
-function getPag(elementPag, operation = 'get', info = null)
+/**
+ * 
+ * @param {object} elementPag 
+ * @param {string} operation 
+ * @param {object} info 
+ */
+function getPag(elementPag, operation = "get", info = null)
 {
     const pagNumber = elementPag.getElementById("pagNumber");
-    if(operation == 'get'){
+    if(operation == "get"){
     const prev = pagNumber.getAttribute("data-prev");
-    const next = pagNumber.getAttribute("data-next");
         if(prev == "" || prev == null){
-            pagNumber.textContent = "Page 1";
+            pagNumber.textContent = "Page 1 of 42";
         }else{
             const page = getPageNumber(prev) + 1;
-            pagNumber.textContent = "Page " + page;
+            pagNumber.textContent = "Page " + page + " of 42";
         }
     } else {
-        pagNumber.setAttribute("data-next", (info.next == null) ? '' :
-        info.next)
-        pagNumber.setAttribute("data-prev", (info.prev == null) ? '' :
-        info.prev)    
+        pagNumber.setAttribute("data-prev", (info.prev == null) ? "" :
+        info.prev);    
     }
 }
 /**
@@ -120,3 +138,11 @@ function renderHtml(data){
     }
 }
 
+// function characterFilter(character){
+//     const genderFilter = character.querySelector("span");
+//     if(genderFilter && genderFilter.textContent === "Male"){
+//         character.style.display = "flex";
+//     } else {
+//         character.style.display = "none";
+//     }
+// }

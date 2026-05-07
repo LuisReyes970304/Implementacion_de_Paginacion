@@ -28,6 +28,30 @@ header h1 {
     padding-left: 20px;
 }
 
+header div {
+    display: flex;
+    width: 30%;
+    justify-content: space-between;
+}
+
+header div nav {
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+
+header div nav a {
+    color: white;
+    text-decoration: none;
+    font-size: x-large;
+}
+
+header div nav a:hover {
+    color: white;
+    text-decoration: none;
+    font-size: x-large;
+}
+
 header p {
     padding-right: 20px;
 }
@@ -48,7 +72,7 @@ ul {
     gap: 1%;
     margin-top: 70px;
     width: 90%;
-    height: auto;
+    height: 80vh;
     overflow-y: auto;
     scrollbar-width: none;
     padding: 10px;
@@ -67,7 +91,7 @@ li {
     transition: ease-in-out 0.2s;
 }
 
-li:hover, button:hover {
+li:hover {
     transform: scale(1.02);
     box-shadow: 1px 1px 15px 1px green;
     color: greenyellow;
@@ -78,7 +102,8 @@ footer {
     align-items: center;
     justify-content: center;
     height: 85px;
-    gap: 40px
+    gap: 40px;
+    width: 100%;
 }
 
 button {
@@ -93,6 +118,17 @@ button {
     color: white;
     font-size: x-large;
 }
+
+#loadMore {
+    justify-self:center;
+}
+
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 1px 1px 15px 1px green;
+    color: greenyellow;
+}
+
 button:active {
     transform: scale(1.0);
 }
