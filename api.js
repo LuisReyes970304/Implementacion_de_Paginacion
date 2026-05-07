@@ -200,14 +200,3 @@ function filterByGender(gender) {
 }
 
 
-
-
-
-// function characterFilter(character){
-//     const genderFilter = character.querySelector("span");
-//     if(genderFilter && genderFilter.textContent === "Male"){
-//         character.style.display = "flex";
-//     } else {
-//         character.style.display = "none";
-//     }
-// }
