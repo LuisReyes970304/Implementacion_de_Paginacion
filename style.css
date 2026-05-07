@@ -132,3 +132,22 @@ button:hover {
 button:active {
     transform: scale(1.0);
 }
+
+.loading {
+    display: none;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.719);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    color: white;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.show {
+    display: flex;
+}

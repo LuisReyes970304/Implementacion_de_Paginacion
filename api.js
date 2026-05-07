@@ -36,6 +36,11 @@ async function requestData(url_api) {
 function loadMore() {
     const button = document.getElementById("loadMore");
     const nextUrl = button.getAttribute("data-next");
+    let loading = document.querySelector(".loading");
+    loading.classList.toggle("show");
+    setTimeout(()=>{
+        loading.classList.remove("show");
+    }, 1000);
     
     // REINICIO: Limpiamos el filtro antes de pedir la siguiente página
     const cleanUrl = removeFilters(nextUrl);
@@ -48,6 +53,11 @@ function loadMore() {
 function loadPrev() {
     const button = document.getElementById("loadPrev");
     const prevUrl = button.getAttribute("data-prev");
+    let loading = document.querySelector(".loading");
+    loading.classList.toggle("show");
+    setTimeout(()=>{
+        loading.classList.remove("show");
+    }, 1000);
     
     // REINICIO: Limpiamos el filtro antes de pedir la página anterior
     const cleanUrl = removeFilters(prevUrl);
