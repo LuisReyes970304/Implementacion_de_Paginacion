@@ -6,11 +6,15 @@ const url_api = "https://rickandmortyapi.com/api/character";
 *@param {string} url_api
 */
 
+let loading = false
+
 document.addEventListener("DOMContentLoaded", () => {
     requestData(url_api);
 });
 
 async function requestData(url_api) {
+    if(loading) return;
+        loading = true;
     const response = await axios.get(url_api);
     let data = response.data;
     console.log(data);
@@ -21,6 +25,8 @@ async function requestData(url_api) {
     getPag(document, "set", data.info);
     getPag(document, "get");
     renderHtml(data);
+
+    loading = false
 }
 
 /**
@@ -28,13 +34,28 @@ async function requestData(url_api) {
 *Call @Function getElementButton 
 */
 function loadMore() {
-    getElementButton(document, "get");
+    const button = document.getElementById("loadMore");
+    const nextUrl = button.getAttribute("data-next");
+    
+    // REINICIO: Limpiamos el filtro antes de pedir la siguiente página
+    const cleanUrl = removeFilters(nextUrl);
+    
+    if (cleanUrl) {
+        requestData(cleanUrl);
+    }
 }
 
 function loadPrev() {
-    getElementButtonPrev(document, "get");
+    const button = document.getElementById("loadPrev");
+    const prevUrl = button.getAttribute("data-prev");
+    
+    // REINICIO: Limpiamos el filtro antes de pedir la página anterior
+    const cleanUrl = removeFilters(prevUrl);
+    
+    if (cleanUrl) {
+        requestData(cleanUrl);
+    }
 }
-
 /**
 *getElementButton
 *@param {object} elementButton
@@ -101,20 +122,19 @@ function getPageNumber(url) {
  * @param {string} operation 
  * @param {object} info 
  */
-function getPag(elementPag, operation = "get", info = null)
-{
+function getPag(elementPag, operation = "get", info = null) {
     const pagNumber = elementPag.getElementById("pagNumber");
-    if(operation == "get"){
-    const prev = pagNumber.getAttribute("data-prev");
-        if(prev == "" || prev == null){
+    if (operation == "get") {
+        const prev = pagNumber.getAttribute("data-prev");
+        if (prev == "" || prev == null) {
             pagNumber.textContent = "Page 1 of 42";
-        }else{
+        } else {
             const page = getPageNumber(prev) + 1;
             pagNumber.textContent = "Page " + page + " of 42";
         }
     } else {
-        pagNumber.setAttribute("data-prev", (info.prev == null) ? "" :
-        info.prev);    
+        // Guardamos la URL previa para saber en qué página estamos luego
+        pagNumber.setAttribute("data-prev", (info.prev == null) ? "" : info.prev);    
     }
 }
 /**
@@ -137,6 +157,41 @@ function renderHtml(data){
         </li>`;
     }
 }
+
+function removeFilters(url) {
+    if (!url) return null;
+    const newUrl = new URL(url);
+    const page = newUrl.searchParams.get("page") || 1;
+    // Retornamos la URL base pero manteniendo el número de página
+    return `${url_api}/?page=${page}`;
+}
+
+function filterByGender(gender) {
+    const pagNumberElement = document.getElementById("pagNumber");
+    const prevUrl = pagNumberElement.getAttribute("data-prev");
+    
+    // 1. Averiguamos en qué página estamos. 
+    // Si prevUrl existe, la página actual es la de prev + 1. Si no, es la 1.
+    let currentPage = 1;
+    if (prevUrl) {
+        currentPage = getPageNumber(prevUrl) + 1;
+    }
+
+    // 2. Construimos la URL manteniendo la página Y agregando el filtro
+    // Ejemplo: .../character/?page=5&gender=male
+    let filterUrl = `${url_api}/?page=${currentPage}`;
+    
+    if (gender) {
+        filterUrl += `&gender=${gender}`;
+    }
+    
+    // 3. Pedimos los datos
+    requestData(filterUrl);
+}
+
+
+
+
 
 // function characterFilter(character){
 //     const genderFilter = character.querySelector("span");
